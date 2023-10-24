@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<style>
+   body{
+    background-color:#f7f6f6;
+   }
+</style>
+<div class="container">
+        <h3 class="text-center mt-5 mb-3">Liste des Canditats Du Baccalauréat</h3>
+        {#<div class="card-footer" >
+                <form action="#" method="post">
+                  <div class="input-group">
+                    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                    <span class="input-group-append">
+                      <button type="button" class="btn btn-primary">Send</button>
+                    </span>
+                  </div>
+                </form>
+              </div>#}
+        <div class="card" style="width:1200px;">
+            <div class="card-header">
+               
+            </div>
+            <div class="card-body bs-card-subtitle-color">
+                <div id="alert-div">
+                   
+                </div>
+                <table class="table table-bordered bs-table-border-color">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Genre</th>
+                            <th>Etablissement</th>
+                            <th>Père</th>
+                            <th>Mère</th>
+                            <th>Candidat</th>
+                            <th>Collectif</th>
+                            <th>Individuel</th>
+                            
+                            <th width="240px">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projects-table-body">
+                            {% for etudient in etudients %}
+                <tr>
+                    <td>{{ etudient.nom}}</td>
+                    <td>{{ etudient.prenom}}</td>
+                    <td>{{ etudient.genre}}</td>
+                    <td>{{ etudient.etablissement}}</td>
+                    <td>{{ etudient.pere}}</td>
+                    <td>{{ etudient.mere}}</td>
+                    <td>{{ etudient.candidat}}</td>
+                    <td>{{ etudient.collective}}</td>
+                    <td>{{ etudient.individuel}}</td>
+                   
+
+                    <td>
+                       
+                       
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %} 
+                    </tbody>
+                       
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

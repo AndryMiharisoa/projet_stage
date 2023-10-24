@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block body %}
+<style>
+body{
+    background-color:#f1f7f5;
+}
+.form-control{
+  width: 450px;
+}
+
+/*.prenom{
+    margin-left:505px;
+    margin-top:-62px;
+}*/
+#etudient_Candidat,#etudient_Candidat_1,#etudient_Collective{
+    margin-left:20px;
+}
+
+#etudient_Collective_0,#etudient_Individuel_0{
+  margin-left:30px
+}
+#etudient_Collective_1,#etudient_Individuel_1{
+    margin-left:60px
+}
+#etudient_Individuel_2{
+   margin-left:50px
+}
+#etudient_Individuel_3{
+    margin-left:30px;
+}
+#etudient_Collective_2{
+    margin-left:70px;
+}
+#etudient_Enregistrer{
+    margin-left:400px;
+    margin-top:-100px;
+}
+
+
+</style>
+   <img src="../Image/université.png" width="100px" heigth="100px" style="margin-left:628px;margin-top:22px;">
+    <h3 class="text-center">Inscription</h3>
+   {# <form method="POST" action="{{ path('inscription') }}">
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom" required>
+
+        <label for="prenom">Prénom:</label>
+        <input type="text" id="prenom" name="prenom" required>
+       
+
+       
+        <button type="submit">Inscription</button>
+    </form> #}
+        <div class="w-55 mx-auto">
+        
+            <div class="container">
+                <div class="card" style="opacity:5;background-color:white;">
+                    <div class="card-body ">
+                    <div class="col-5 lg-2 mt-4 sm-2">
+                        {{ include('etudiant/form/form.html.twig') }}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

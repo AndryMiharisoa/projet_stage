@@ -1,0 +1,75 @@
+{{ form_start(form) }}
+    {{ form_row(form._token) }}
+    <div>
+       {{ form_row(form.Nom,{
+    "attr":{"placeholder":"entrez votre nom",
+    },
+    "label":"nom ",
+    "label_attr":{"class":"andry","id":"jim"}
+    }) }}<br>
+    </div>
+    <div class="prenom">
+        {{ form_row(form.Prenom,{
+            
+        }) }}<br>
+    </div>
+    <div >
+        {{ form_row(form.DateNaissance) }}<br>
+    </div>
+    <div>
+    {{ form_row(form.Genre)}}<br>
+    </div>
+    <div>
+        {{ form_row(form.Etablissement) }}<br>
+    </div>
+    <div>
+       {{ form_row(form.Pere)}}<br>
+    </div>
+    <div>
+       {{ form_row(form.Mere)}}<br>
+    </div>
+    <div>
+        {{ form_row(form.Region) }}<br>
+    </div>
+    <div>
+        {{ form_row(form.District) }}<br>
+    </div>
+    <div>
+        {{ form_row(form.Serie) }}<br>
+    </div>
+    {{ form_row(form.Candidat)}}<br>
+    <div>
+    </div>
+    <div>
+        {{ form_row(form.Session) }}<br>
+    </div>
+     
+    <div>
+        {{ form_row(form.Facultative) }}<br>
+    </div>
+    <h3 class="text-center">sport</h3>
+     <p> - si vous etes fair le sport completé le champs</p>
+     <p> - l'eps est facultatif pour les candidat</p>
+    <div>
+    {{ form_row(form.Individuel) }}<br>
+    </div>
+    <div>
+        {{ form_row(form.Collective) }}<br>
+    </div>
+    <div>
+        
+    </div>
+    <div>
+        {{ form_row(form.Enregistrer) }}
+    </div>
+{{ form_end(form) }}
+
+{% block js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+	    $('.facultative').select2();
+         $('#etudient_Region').select2();
+    }, false);
+
+</script>
+{% endblock %}
