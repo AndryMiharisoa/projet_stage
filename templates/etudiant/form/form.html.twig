@@ -2,13 +2,13 @@
     {{ form_row(form._token) }}
     <div>
        {{ form_row(form.Nom,{
-    "attr":{"placeholder":"entrez votre nom",
+    "attr":{"placeholder":"",
     },
-    "label":"nom ",
+    "label":"Nom ",
     "label_attr":{"class":"andry","id":"jim"}
     }) }}<br>
     </div>
-    <div class="prenom">
+    <div class="Prenom">
         {{ form_row(form.Prenom,{
             
         }) }}<br>
@@ -34,41 +34,54 @@
     <div>
         {{ form_row(form.District) }}<br>
     </div>
-    <div>
-        {{ form_row(form.Serie) }}<br>
-    </div>
-    {{ form_row(form.Candidat)}}<br>
-    <div>
-    </div>
-    <div>
-        {{ form_row(form.Session) }}<br>
-    </div>
-     
-    <div>
-        {{ form_row(form.Facultative) }}<br>
-    </div>
-    <h3 class="text-center">sport</h3>
-     <p> - si vous etes fair le sport completé le champs</p>
-     <p> - l'eps est facultatif pour les candidat</p>
-    <div>
-    {{ form_row(form.Individuel) }}<br>
-    </div>
-    <div>
-        {{ form_row(form.Collective) }}<br>
-    </div>
-    <div>
+    <div style="width:280px;height:300px;margin-left:550px;margin-top:-709px;">
+        <div>
+            {{ form_row(form.Serie) }}<br>
+        </div>
+        {{ form_row(form.Candidat)}}<br>
+        <div>
+        </div>
+        <div>
+            {{ form_row(form.Session) }}<br>
+        </div>
         
+        <div>
+            {{ form_row(form.Facultative) }}<br>
+        </div>
     </div>
-    <div>
+
+     <div style="width:480px;height:500px;margin-left:550px;margin-top:35px;">
+      <fieldset style="width:480px;height:400px">
+
+       
+        <legend class="text-center">Education Physique Sport</legend>
+         
+            <p> - si vous etes fair le sport completé le champs</p>
+            <p> - l'eps est facultatif pour les candidat et inapte</p>
+            <div>
+            {{ form_row(form.Individuel) }}<br>
+            </div>
+            <div>
+                {{ form_row(form.Collective) }}<br>
+            </div>
+        
+        </div>
+      </fieldset>
+  
+     <div style="margin-top:-40px;">
         {{ form_row(form.Enregistrer) }}
+   {{ form_end(form) }}
     </div>
-{{ form_end(form) }}
+
+
 
 {% block js %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 	    $('.facultative').select2();
-         $('#etudient_Region').select2();
+        $('#etudient_Region').select2();
+        $('#etudient_Serie').select2();
+        $('#etudient_Facultative').select2();
     }, false);
 
 </script>

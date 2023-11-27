@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion de vente | Liste des entrées{% endblock %}
+
+{% block body %}
+    <h4 class="text-center">Ajouter une note</h4>
+    <div style="width:90%">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="crud_table" style="background-color:white">
+                <tr>
+                    <th>ID Étudiant</th>
+                    <th>Note</th>
+                </tr>
+                <tr>
+                    <td contenteditable="true" class="entr_etudiant_id"></td>
+                    <td contenteditable="true" class="entr_note"></td>
+                </tr>
+            </table>
+            <div align="right">
+                <button type="button" name="add" id="add" class="btn btn-secondary" style="height:25px; font-size:9px">+</button>
+            </div>
+            <div align="center">
+                <button type="button" name="save" id="save" class="btn btn-success" style="height:35px; font-size:12px">Enregistrer</button>
+            </div>
+            <br />
+            <div id="inserted_item_data"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var count = 1;
+
+            $('#add').click(function() {
+                count++;
+                var html_code = "<tr id='row"+count+"'>";
+                html_code += "<td contenteditable='true' class='entr_etudiant_id'></td>";
+                html_code += "<td contenteditable='true' class='entr_note'></td>";
+                html_code += "</tr>";
+                $('#crud_table').append(html_code);
+            });
+
+            $('#save').click(function() {
+                var entries = [];
+                $('#crud_table tr').each(function(row, tr) {
+                    if (row !== 0) {
+                        var entry = {
+                            etudiant_id: $(tr).find('.entr_etudiant_id').text(),
+                            note: $(tr).find('.entr_note').text()
+                        };
+                        entries.push(entry);
+                    }
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('save_notes') }}',
+                    data: JSON.stringify({ entries: entries }),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        console.log('Données enregistrées avec succès !');
+                    },
+                    error: function(error) {
+                        console.error('Erreur lors de l\'enregistrement des données : ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

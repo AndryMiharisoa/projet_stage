@@ -70,7 +70,13 @@ class EtudientType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('Serie',TextType::class, [
+            ->add('Serie',ChoiceType::class, [
+                'choices'=>[
+                  'A1'=>'A1',
+                  'A2'=>'A2',
+                  'C'=>'C',
+                  'D'=>'D'
+                ],
                 'attr' => [
                     'class' => 'form-control'
                 ]

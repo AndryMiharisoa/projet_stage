@@ -2,15 +2,19 @@
 
 namespace App\Controller;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Etudient;
 use App\Form\EtudientType;
+use App\Repository\EtudientRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EtudiantController extends AbstractController
 {
@@ -41,6 +45,7 @@ class EtudiantController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {  
+            $etudiant->setConvocation($this->generateNumeroConvaction());
             $entityManager->persist($etudiant);
             $entityManager->flush();
          
@@ -53,5 +58,65 @@ class EtudiantController extends AbstractController
             'form' => $form
         ]);
     }
-    
+    private function generateNumeroConvaction(): string
+    {
+        // Générez votre numéro_convaction ici, par exemple : 125/21
+        $year = date('y');
+        $numero = rand(100, 20000); // Numéro aléatoire
+
+        return $numero . '/' . $year;
+    }
+
+/**
+     * @Route("/add_selected_to_pdf", name="add_selected_to_pdf", methods={"POST"})
+     */
+    public function addSelectedToPdf(Request $request): Response
+    {
+        // Récupérer les IDs des étudiants sélectionnés depuis le formulaire
+        $selectedStudentIds = $request->request->get('selected_students');
+
+        // Récupérer les données des étudiants sélectionnés depuis la base de données
+        $entityManager = $this->getDoctrine()->getManager();
+        $selectedStudents = $entityManager->getRepository(Etudient::class)->findBy(['id' => $selectedStudentIds]);
+
+        // Générer le contenu HTML du PDF avec les étudiants sélectionnés
+        $html = $this->renderView('etudiant/convocation.html.twig', [
+            'etudients' => $selectedStudents,
+        ]);
+
+        // Configuration de Dompdf
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+
+        // Réglages du papier et du format du PDF
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Génération du contenu PDF
+        $dompdf->render();
+
+        // Enregistrer le fichier PDF dans le dossier spécifié sur le serveur
+        $destinationPath = 'E:/Boky/'; // Remplacez par votre chemin absolu
+        $pdfFileName = 'liste_etudiants.pdf';
+        $pdfFilePath = $destinationPath . $pdfFileName;
+
+    file_put_contents($pdfFilePath, $dompdf->output());
+   
+    // Création d'une réponse de téléchargement pour l'utilisateur
+    $response = new Response(
+        file_get_contents($pdfFilePath),
+        Response::HTTP_OK,
+        [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => ResponseHeaderBag::DISPOSITION_ATTACHMENT . '; filename=' . $pdfFileName,
+        ]
+    );
+
+    // Suppression du fichier après envoi au téléchargement
+    unlink($pdfFilePath);
+
+    return $response;
+}
 }
