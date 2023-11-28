@@ -62,9 +62,11 @@ class EtudiantController extends AbstractController
     {
         // Générez votre numéro_convaction ici, par exemple : 125/21
         $year = date('y');
-        $numero = rand(100, 20000); // Numéro aléatoire
+        $numero = rand(10000, 2000000); // Numéro aléatoire
 
-        return $numero . '/' . $year;
+       // return $numero . '/' . $year;
+       
+        return $numero ;
     }
 
 /**

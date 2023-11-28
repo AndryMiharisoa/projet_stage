@@ -10,12 +10,22 @@
                 <div class="card-body bs-card-subtitle-color">
                     <div id="alert-div"></div>
                     <div class="row">
+          
                         {% for etudient in etudients %}
+                        
                             <div class="col-md-4">
                                 <div class="student-card">
-                                    <h4>{{ etudient.nom }}</h4>
-                                    <h4> {{ etudient.prenom }}</h4>
-                                    <p>Convocation: {{ etudient.convocation }}</p>
+                                    <h4>Nom:{{ etudient.nom }}</h4>
+                                    <h4>Prénom:{{ etudient.prenom }}</h4>
+                                    <h4>Convocation: {{ etudient.convocation }}</h4>
+                                    <h4>Etablissement: {{ etudient.etablissement }}</h4>
+                                    <h4>Série: {{ etudient.serie }}</h4>
+                                    ----------------------------------------------------
+                                    <p>convocation EPS</p>
+                                     <h4>Convocation: {{ etudient.convocation }}</h4>
+                                      <h4>{{ etudient.collective }}</h4>
+                                      <h4>{{ etudient.collective }}</h4>
+
                                  
                                 </div>
                             </div>
