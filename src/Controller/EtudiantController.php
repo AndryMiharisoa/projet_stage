@@ -100,7 +100,7 @@ class EtudiantController extends AbstractController
         $dompdf->render();
 
         // Enregistrer le fichier PDF dans le dossier spécifié sur le serveur
-        $destinationPath = 'E:/Boky/'; // Remplacez par votre chemin absolu
+        $destinationPath = 'E:/boky/'; // Remplacez par votre chemin absolu
         $pdfFileName = 'liste_etudiants.pdf';
         $pdfFilePath = $destinationPath . $pdfFileName;
 

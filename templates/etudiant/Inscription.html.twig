@@ -5,7 +5,7 @@
 {% block body %}
 <style>
 body{
-    background-color:#f1f7f5;
+    background-color:#b5b9b8;
 }
 .form-control{
   width: 450px;
@@ -44,6 +44,12 @@ body{
     margin-top:-10px;
     margin-left:20px;
 }
+#etudient_Collective_2{
+    padding:10px;
+}
+#etudient_Collective_3{
+    margin-left:30px;
+}
 fieldset {
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -51,11 +57,13 @@ fieldset {
     margin: 10px;
 }
 
+
 /* Styles pour la légende (le titre du fieldset) */
 legend {
     font-weight: bold;
     color: #333;
 }
+
 
 
 
@@ -76,12 +84,12 @@ legend {
        
         <button type="submit">Inscription</button>
     </form> #}
-        <div class="w-55 mx-auto">
+        <div class="w-40 mx-auto">
         
             <div class="container">
                 <div class="card" style="opacity:5;background-color:white;">
                     <div class="card-body ">
-                    <div class="col-5 lg-2 mt-4 sm-2">
+                    <div class="col-3 lg-2 mt-4 sm-2">
                         {{ include('etudiant/form/form.html.twig') }}
                     </div>
                     </div>

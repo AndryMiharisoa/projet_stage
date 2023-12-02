@@ -8,11 +8,16 @@
         <div class="table-responsive">
             <table class="table table-bordered" id="crud_table" style="background-color:white">
                 <tr>
-                    <th>ID Étudiant</th>
+                    <th>Numéro convocation</th>
+                    <th>Matiere</th>
+                    <th>Coefficient</th>
                     <th>Note</th>
+                    <th>Total</th>
                 </tr>
                 <tr>
                     <td contenteditable="true" class="entr_etudiant_id"></td>
+                    <td contenteditable="true" class="entr_matiere"></td>
+                    <td contenteditable="true" class="entr_coefficient"></td>
                     <td contenteditable="true" class="entr_note"></td>
                 </tr>
             </table>
@@ -39,6 +44,8 @@
                 count++;
                 var html_code = "<tr id='row"+count+"'>";
                 html_code += "<td contenteditable='true' class='entr_etudiant_id'></td>";
+                html_code += "<td contenteditable='true' class='entr_matiere'></td>";
+                html_code += "<td contenteditable='true' class='entr_coefficient'></td>";
                 html_code += "<td contenteditable='true' class='entr_note'></td>";
                 html_code += "</tr>";
                 $('#crud_table').append(html_code);
@@ -50,15 +57,16 @@
                     if (row !== 0) {
                         var entry = {
                             etudiant_id: $(tr).find('.entr_etudiant_id').text(),
+                            matiere: $(tr).find('.entr_matiere').text(),
+                            coefficient: $(tr).find('.entr_coefficient').text(),
                             note: $(tr).find('.entr_note').text()
                         };
                         entries.push(entry);
                     }
                 });
-
                 $.ajax({
                     type: 'POST',
-                    url: '{{ path('save_notes') }}',
+                    
                     data: JSON.stringify({ entries: entries }),
                     contentType: 'application/json',
                     success: function(response) {

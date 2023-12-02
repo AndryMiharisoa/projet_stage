@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Etudient;
 use App\Entity\Note;
+use App\Entity\Matiere;
 use App\Repository\NoteRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\EtudientRepository;
@@ -25,35 +26,46 @@ class NoteController extends AbstractController
             'note'=>$noteRepository->findAll(),
         ]);
     }
-/**
-     * @Route("/save-notes", name="save-notes", methods={"GET","POST"})
+ /**
+     * @Route("/new", name="entree_new", methods={"GET","POST"})
      */
-    public function note(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
-
-        if (!empty($data['entries'])) {
-            $entityManager = $this->getDoctrine()->getManager();
-
-            foreach ($data['entries'] as $entry) {
-                $note = new Note();
-                $etudiant = $this->getDoctrine()->getRepository(Etudiant::class)->find($entry['etudiant_id']);
-
-                if ($etudiant) {
-                    //$note->setEtudiant($etudiant);
-                    $note->setValeur($entry['note']);
-
-                    $entityManager->persist($note);
-                }
-            }
-
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Données enregistrées avec succès');
-            return $this->render('note.html.twig'); // Rediriger vers une page de succès
-        } else {
-            $this->addFlash('error', 'Aucune donnée reçue');
-            return $this->redirectToRoute('save-notes'); // Rediriger vers une page d'erreur si aucune donnée n'est reçue
-        }
+    
+     public function createEntry(Request $request): Response
+     {
+         $data = json_decode($request->getContent(), true);
+ 
+         if (!isset($data['entries']) || !is_array($data['entries'])) {
+             return new Response('Données invalides', Response::HTTP_BAD_REQUEST);
+         }
+ 
+         $entityManager = $this->getDoctrine()->getManager();
+ 
+         foreach ($data['entries'] as $entryData) {
+             if (!isset($entryData['etudient_id'], $entryData['matiere'], $entryData['coefficient'], $entryData['note'])) {
+                 return new Response('Données incomplètes', Response::HTTP_BAD_REQUEST);
+             }
+ 
+             $etudiant = $this->getDoctrine()->getRepository(Etudient::class)->findOneBy(['convocation' => $entryData['etudient_id']]);
+             
+             if (!$etudiant) {
+                 return new Response('Numéro de convocation non trouvé : ' . $entryData['etudient_id'], Response::HTTP_BAD_REQUEST);
+             }
+ 
+             $matiere = new Matiere();
+             $matiere->setNom($entryData['matiere']);
+             $matiere->setCoefficient($entryData['coefficient']);
+             
+             $note = new Note();
+             $note->setValeur($entryData['note']);
+             $note->setEtudient($etudiant);
+             $note->setMatiere($matiere);
+             
+             $entityManager->persist($matiere);
+             $entityManager->persist($note);
+         }
+         
+         $entityManager->flush();
+         
+         return new Response('Données enregistrées avec succès !', Response::HTTP_OK);
+     }
     }
-}

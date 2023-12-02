@@ -109,6 +109,7 @@ class EtudientType extends AbstractType
                  'Lance de poids'=>'Lance de poids',
                  'Saute à Hauteur'=>'Saute à hauteur',
                  'Saute à longeur'=>'Saute à longeur',
+                 'Lançé de poids' =>'Lançé de poids'
                ],
                'expanded' =>true,
             ])
@@ -116,7 +117,8 @@ class EtudientType extends AbstractType
                 'choices'=> [
                     'Foot-ball'=>'Foot-Ball',
                     'Basket-Ball'=>'Basket-Ball',
-                    'Volley-Ball'=>'Volley-Ball'
+                    'Volley-Ball'=>'Volley-Ball',
+                    'Hand -Ball' =>'Hand-Ball'
                 ],
                 
                 'expanded' => true,
