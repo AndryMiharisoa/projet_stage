@@ -33,7 +33,12 @@ class NoteController extends AbstractController
      public function createEntry(Request $request): Response
      {
          $data = json_decode($request->getContent(), true);
- 
+        // $data = array(
+        //    "nom" => "son",
+        //    "prenom" => "azerty"
+        //);
+
+              dd($data);
          if (!isset($data['entries']) || !is_array($data['entries'])) {
              return new Response('Données invalides', Response::HTTP_BAD_REQUEST);
          }
@@ -45,9 +50,9 @@ class NoteController extends AbstractController
                  return new Response('Données incomplètes', Response::HTTP_BAD_REQUEST);
              }
  
-             $etudiant = $this->getDoctrine()->getRepository(Etudient::class)->findOneBy(['convocation' => $entryData['etudient_id']]);
+             $etudient = $this->getDoctrine()->getRepository(Etudient::class)->findOneBy(['convocation' => $entryData['etudient_id']]);
              
-             if (!$etudiant) {
+             if (!$etudient) {
                  return new Response('Numéro de convocation non trouvé : ' . $entryData['etudient_id'], Response::HTTP_BAD_REQUEST);
              }
  
@@ -57,7 +62,7 @@ class NoteController extends AbstractController
              
              $note = new Note();
              $note->setValeur($entryData['note']);
-             $note->setEtudient($etudiant);
+             $note->setEtudient($etudient);
              $note->setMatiere($matiere);
              
              $entityManager->persist($matiere);
@@ -65,7 +70,11 @@ class NoteController extends AbstractController
          }
          
          $entityManager->flush();
+         return $this->render('liste.html.twig', [
+            'entries' => $data, // Envoyer les données collectées à la vue
+        ]);
          
          return new Response('Données enregistrées avec succès !', Response::HTTP_OK);
      }
     }
+

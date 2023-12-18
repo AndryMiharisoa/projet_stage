@@ -15,21 +15,37 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class EtudiantController extends AbstractController
 {
     
      private $etudients = [];
     #[Route('/etudiant', name: 'app_etudiant')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        // Récupérer les données de la table "personne" depuis la base de données
         $etudients = $this->getDoctrine()->getRepository(Etudient::class)->findAll();
-
+    
+        // Filtrage par nom, prénom ou convocation
+        $searchInput = $request->query->get('searchInput');
+        $serieFilter = $request->query->get('serieFilter');
+        $convocation= $request->query->get('convocationFilter');
+    
+        if ($searchInput) {
+            $etudiants = $this->getDoctrine()->getRepository(Etudient::class)->findByNomPrenom($searchInput);
+        }
+    
+        if ($serieFilter) {
+            $etudiants = $this->getDoctrine()->getRepository(Etudient::class)->findBySerie($serieFilter);
+        }
+        if($convocation){
+            $etudients = $this->getDoctrine()->getRepository(Etudient::class)->findByConvocation($convocation);
+        }
         return $this->render('Etudiant/index.html.twig', [
             'etudients' => $etudients,
         ]);
     }
+
 
 
     #[Route('/inscription', name: 'inscription', methods: ['POST', 'GET'])]
@@ -43,7 +59,25 @@ class EtudiantController extends AbstractController
         ]);
 
         $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('Image')->getData();
 
+            if ($imageFile) {
+                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Gestion des erreurs si nécessaire
+                }
+
+                $etudiant->setImage($newFilename);
+            }
+
+        }
         if($form->isSubmitted() && $form->isValid()) {  
             $etudiant->setConvocation($this->generateNumeroConvaction());
             $entityManager->persist($etudiant);
@@ -58,13 +92,14 @@ class EtudiantController extends AbstractController
             'form' => $form
         ]);
     }
+
     private function generateNumeroConvaction(): string
     {
         // Générez votre numéro_convaction ici, par exemple : 125/21
         $year = date('y');
         $numero = rand(10000, 2000000); // Numéro aléatoire
 
-       // return $numero . '/' . $year;
+       return $numero . '/' . $year;
        
         return $numero ;
     }

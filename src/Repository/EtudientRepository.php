@@ -45,4 +45,25 @@ class EtudientRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function index($searchInput, $serieFilter)
+{
+    $queryBuilder = $this->createQueryBuilder('e');
+
+    // Filtre par nom et prénom
+    if ($searchInput) {
+        $queryBuilder
+            ->andWhere('e.nom LIKE :searchInput OR e.prenom LIKE :searchInput')
+            ->setParameter('searchInput', '%' . $searchInput . '%');
+    }
+
+    // Filtre par série
+    if ($serieFilter) {
+        $queryBuilder
+            ->andWhere('e.serie = :serieFilter')
+            ->setParameter('serieFilter', $serieFilter);
+    }
+
+    return $queryBuilder->getQuery()->getResult();
+}
+
 }

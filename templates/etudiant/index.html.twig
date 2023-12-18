@@ -6,13 +6,38 @@
         background-color: #f7f6f6;
     }
 </style>
-<div class="container">
-    <h3 class="text-center mt-5 mb-3">Liste des Candidats Du Baccalauréat</h3>
-    <form action="{{ path('add_selected_to_pdf') }}" method="POST">
-        <button type="submit" class="btn btn-primary">Ajouter sélection au PDF</button>
-         <button type="button" class="btn btn-secondary" onclick="selectAllStudents()">Sélectionner tous</button>
-        
-        <div class="card" style="width:1200px;">
+         <h5 class="text-center mt-5 mb-3">Liste des Candidats Du Baccalauréat</h5><br><br>
+           
+                 
+                
+                   <div class="row mb-3">
+                     <div class="col-md-2 d-flex align-items-center">    
+                 
+                <input style="margin-left:180px; width:302px;" class="form-control col-4" type="text" id="searchInput" onkeyup="searchByFields()" placeholder="Rechercher par nom ou prénom...">
+
+                    <label style="margin-left:62px;" for="serieFilter">série:</label>
+                        <select id="serieFilter" onchange="filterBySerie()" class="form-control col-2" >
+                            <option value="">Toutes les séries</option>
+                            <option value="A1">A1</option>
+                            <option value="A2">A2</option>
+                            <option value="C"> C</option>
+                            <option value="D"> D</option>
+                        </select>
+                      
+                <input style="margin-left:25px;" class="form-control col-3" type="text" id="convocation" onkeyup="searchByConvocation()" placeholder="Entrez le numéro convocation">
+                      
+       <form action="{{ path('add_selected_to_pdf') }}" method="POST"> 
+             <div class="col-md-2 d-flex align-items-center">  
+            
+          <button type="submit" class="btn btn-primary" style="margin-left:50px;">Ajouter </button>
+
+ 
+            <button style="margin-left:55px;" type="button" class="btn btn-secondary" onclick="selectAllStudents()">Sélectionner</button>
+      
+   </div>
+    </div>
+
+        <div class="card" style="width:1279px;margin-top:40px;margin-left:auto;">
             <div class="card-body bs-card-subtitle-color">
                 <div id="alert-div">
                 </div>
@@ -23,11 +48,12 @@
                             <th>Prénom</th>
                             <th>Genre</th>
                             <th>Etablissement</th>
+                            <th>serie</th>
                             <th>Numero</th>
                             <th>Candidat</th>
                             <th>Collectif</th>
                             <th>Individuel</th>
-                            <th width="240px">Action</th>
+                            <th width="130px">Action</th>
                         </tr>
                     </thead>
                     <tbody id="projects-table-body">
@@ -37,6 +63,7 @@
                             <td>{{ etudient.prenom }}</td>
                             <td>{{ etudient.genre }}</td>
                             <td>{{ etudient.etablissement }}</td>
+                            <td>{{ etudient.serie }}</td>
                             <td>{{ etudient.convocation }}</td>
                             <td>{{ etudient.candidat }}</td>
                             <td>{{ etudient.collective }}</td>
@@ -61,12 +88,106 @@
 </div>
 
 <script>
-    function selectAllStudents() {
+ function selectAllStudents() {
         var checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(function(checkbox) {
             checkbox.checked = true;
         });
     }
+   function searchByFields() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("projects-table-body");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            var found = false;
+            var textContent = tr[i].textContent || tr[i].innerText;
+
+            if (filter.includes(' ')) {
+                var keywords = filter.split(' ');
+                var matchesAllKeywords = true;
+
+                keywords.forEach(keyword => {
+                    if (!textContent.toUpperCase().includes(keyword.toUpperCase())) {
+                        matchesAllKeywords = false;
+                    }
+                });
+
+                if (matchesAllKeywords) {
+                    found = true;
+                }
+            } else {
+                found = textContent.toUpperCase().includes(filter);
+            }
+
+            if (found) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+    function filterBySerie() {
+        var select, filter, table, tr, td, i, txtValue;
+        select = document.getElementById("serieFilter");
+        filter = select.value.toUpperCase();
+        table = document.getElementById("projects-table-body");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[4]; // Colonne de la série
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (filter === "" || txtValue.toUpperCase() === filter) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+
+    function searchByConvocation() {
+        var select, filter, table, tr, td, i, txtValue;
+        select = document.getElementById("convocation");
+        filter = select.value.toUpperCase();
+        table = document.getElementById("projects-table-body");
+        tr = table.getElementsByTagName("tr");
+
+       for (i = 0; i < tr.length; i++) {
+            var found = false;
+            var textContent = tr[i].textContent || tr[i].innerText;
+
+            if (filter.includes(' ')) {
+                var keywords = filter.split(' ');
+                var matchesAllKeywords = true;
+
+                keywords.forEach(keyword => {
+                    if (!textContent.toUpperCase().includes(keyword.toUpperCase())) {
+                        matchesAllKeywords = false;
+                    }
+                });
+
+                if (matchesAllKeywords) {
+                    found = true;
+                }
+            } else {
+                found = textContent.toUpperCase().includes(filter);
+            }
+
+            if (found) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+
 </script>
 
 {% endblock %}

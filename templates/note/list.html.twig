@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des données{% endblock %}
+
+{% block body %}
+    <h4>Liste des données</h4>
+    <ul>
+        {% for entry in entries %}
+            <li>
+                Étudiant ID: {{ entry.etudiant_id }}, Matière: {{ entry.matiere }},
+                Coefficient: {{ entry.coefficient }}, Note: {{ entry.note }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

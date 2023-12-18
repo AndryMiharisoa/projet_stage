@@ -8,17 +8,17 @@
         <div class="table-responsive">
             <table class="table table-bordered" id="crud_table" style="background-color:white">
                 <tr>
-                    <th>Numéro convocation</th>
-                    <th>Matiere</th>
-                    <th>Coefficient</th>
-                    <th>Note</th>
+                    <th>Numéro convocation</th>//dans le table etudient
+                    <th>Matiere</th>//dans le table matiere (nom)
+                    <th>Coefficient</th>//dans le table matiere
+                    <th>valeur</th>dans le table note(valeur)
                     <th>Total</th>
                 </tr>
                 <tr>
-                    <td contenteditable="true" class="entr_etudiant_id"></td>
+                    <td contenteditable="true" class="entr_convocaation"></td>
                     <td contenteditable="true" class="entr_matiere"></td>
                     <td contenteditable="true" class="entr_coefficient"></td>
-                    <td contenteditable="true" class="entr_note"></td>
+                    <td contenteditable="true" class="entr_valeur"></td>
                 </tr>
             </table>
             <div align="right">
@@ -35,7 +35,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(document).ready(function() {
             var count = 1;
@@ -43,34 +42,32 @@
             $('#add').click(function() {
                 count++;
                 var html_code = "<tr id='row"+count+"'>";
-                html_code += "<td contenteditable='true' class='entr_etudiant_id'></td>";
+                html_code += "<td contenteditable='true' class='entr_convocaation'></td>";
                 html_code += "<td contenteditable='true' class='entr_matiere'></td>";
                 html_code += "<td contenteditable='true' class='entr_coefficient'></td>";
-                html_code += "<td contenteditable='true' class='entr_note'></td>";
+                html_code += "<td contenteditable='true' class='entr_valeur'></td>";
                 html_code += "</tr>";
                 $('#crud_table').append(html_code);
             });
 
             $('#save').click(function() {
-           
                 var entries = [];
-              
+                console.log(entries);
                 $('#crud_table tr').each(function(row, tr) {
                     if (row !== 0) {
                         var entry = {
-                            etudiant_id: $(tr).find('.entr_etudiant_id').text(),
+                            convocation: $(tr).find('.entr_convocaation').text(),
                             matiere: $(tr).find('.entr_matiere').text(),
                             coefficient: $(tr).find('.entr_coefficient').text(),
-                            note: $(tr).find('.entr_note').text()
+                            note: $(tr).find('.entr_valeur').text()
                         };
                         entries.push(entry);
-                        console.log(entry );
                     }
                 });
                 $.ajax({
-                    type: 'POST',
-                    url: '{{ path('entree_new') }}',
-                    data:  entries,
+                    method:"GET",
+                    url:"{{ path('entree_new') }}",
+                    data: JSON.stringify(entries),
                     contentType: 'application/json',
                     success: function(response) {
                         console.log('Données enregistrées avec succès !');

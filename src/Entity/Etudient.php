@@ -77,6 +77,12 @@ class Etudient
     #[ORM\Column(length: 255)]
     private ?string $Genre = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Image = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Telephone = null;
+
     public function __construct()
     {
         $this->centre_examen = new ArrayCollection();
@@ -360,6 +366,30 @@ class Etudient
     public function setGenre(string $Genre): static
     {
         $this->Genre = $Genre;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->Image;
+    }
+
+    public function setImage(?string $Image): static
+    {
+        $this->Image = $Image;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->Telephone;
+    }
+
+    public function setTelephone(?string $Telephone): static
+    {
+        $this->Telephone = $Telephone;
 
         return $this;
     }
