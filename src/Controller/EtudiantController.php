@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Twilio\Rest\Client;
 use App\Entity\Etudient;
 use App\Form\EtudientType;
 use App\Repository\EtudientRepository;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -83,7 +85,30 @@ class EtudiantController extends AbstractController
             $entityManager->persist($etudiant);
             $entityManager->flush();
          
+                // Envoi d'un message à l'étudiant après l'inscription
+            $nom = $etudiant->getNom();
+            $prenom = $etudiant->getPrenom();
+            $etablissement=$etudiant->getEtablissement();
+            $serie = $etudiant->getSerie();
+            $candidat= $etudiant->getCandidat();
+            $collective= $etudiant->getFacultative();
+            $facultative= $etudiant->getCollective();
 
+            $numero = $etudiant->getTelephone();
+            // Remplacez ces informations par vos identifiants Twilio
+            $twilioSid = 'ACfbb8f77bca4e6fbf7c78d58c6e0e65d6';
+            $twilioToken = 'c989e4b7a75c22267a7abf85ece555d2';
+            $twilioPhoneNumber = '+17067176317';
+
+            $twilio = new Client($twilioSid, $twilioToken);
+            $message = $twilio->messages->create(
+                $numero, // Numéro du destinataire
+              
+                [
+                    'from' => $twilioPhoneNumber, // Votre numéro Twilio
+                    'body' => "Bonjour $prenom $nom , Etudiant du $etablissement, $serie,$ $collective  $facultative  merci pour votre inscription. Veuillez repondre à ce message pour confirmer votre identite."
+                ]
+            );
             return $this->redirectToRoute('inscription');
         }
 
@@ -92,6 +117,52 @@ class EtudiantController extends AbstractController
             'form' => $form
         ]);
     }
+    #[Route('/etudiant/edit/{id}', name: 'edit_student')]
+public function edite(int $id, Request $request, EntityManagerInterface $entityManager): Response
+{
+    $etudiant = $this->getDoctrine()->getRepository(Etudient::class)->find($id);
+
+        if (!$etudiant) {
+            throw $this->createNotFoundException('Étudiant non trouvé avec l\'identifiant '.$id);
+        }
+
+        $form = $this->createFormBuilder($etudiant)
+            ->add('nom') // Ajoutez tous les champs nécessaires ici
+            ->add('prenom')
+            // Ajoutez d'autres champs requis pour l'édition
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            return $this->redirectToRoute('app_etudiant');
+            // Redirection ou affichage d'un message de succès
+        }
+
+        return $this->render('etudiant/edite.html.twig', [
+            'form' => $form->createView(),
+            'etudiant' => $etudiant,
+        ]);
+    }
+    #[Route('/etudiant/delete/{id}', name: 'delete_student')]
+
+public function deleteStudent(int $id, EntityManagerInterface $entityManager): Response
+{
+    $etudiant = $this->getDoctrine()->getRepository(Etudient::class)->find($id);
+
+    if (!$etudiant) {
+        throw $this->createNotFoundException('Étudiant non trouvé');
+    }
+
+    $entityManager->remove($etudiant);
+    $entityManager->flush();
+
+    // Rediriger vers la page d'affichage des étudiants après suppression
+    return $this->redirectToRoute('app_etudiant');
+}
+
+
 
     private function generateNumeroConvaction(): string
     {
@@ -156,4 +227,7 @@ class EtudiantController extends AbstractController
 
     return $response;
 }
+
+   
+
 }

@@ -45,25 +45,31 @@ class EtudientRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-public function index($searchInput, $serieFilter)
+ public function findByNomPrenom($searchInput)
 {
-    $queryBuilder = $this->createQueryBuilder('e');
-
-    // Filtre par nom et prénom
-    if ($searchInput) {
-        $queryBuilder
-            ->andWhere('e.nom LIKE :searchInput OR e.prenom LIKE :searchInput')
-            ->setParameter('searchInput', '%' . $searchInput . '%');
-    }
-
-    // Filtre par série
-    if ($serieFilter) {
-        $queryBuilder
-            ->andWhere('e.serie = :serieFilter')
-            ->setParameter('serieFilter', $serieFilter);
-    }
-
-    return $queryBuilder->getQuery()->getResult();
+    return $this->createQueryBuilder('e')
+        ->andWhere('e.nom LIKE :searchInput OR e.prenom LIKE :searchInput')
+        ->setParameter('searchInput', '%' . $searchInput . '%')
+        ->getQuery()
+        ->getResult();
 }
+
+public function findBySerie($serieFilter)
+{
+    return $this->createQueryBuilder('e')
+        ->andWhere('e.serie = :serie')
+        ->setParameter('serie', $serieFilter)
+        ->getQuery()
+        ->getResult();
+}
+public function findByConvocation($convocation)
+{
+    return $this->createQueryBuilder('e')
+        ->andWhere('e.convocation = :convocation')
+        ->setParameter('convocation', $convocation)
+        ->getQuery()
+        ->getResult();
+}
+
 
 }

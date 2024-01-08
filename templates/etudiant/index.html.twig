@@ -1,20 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
 <style>
     body {
         background-color: #f7f6f6;
     }
 </style>
          <h5 class="text-center mt-5 mb-3">Liste des Candidats Du Baccalauréat</h5><br><br>
-           
-                 
+          
                 
                    <div class="row mb-3">
                      <div class="col-md-2 d-flex align-items-center">    
-                 
-                <input style="margin-left:180px; width:302px;" class="form-control col-4" type="text" id="searchInput" onkeyup="searchByFields()" placeholder="Rechercher par nom ou prénom...">
-
+                <div class="search-container">   
+                    <input style="margin-left:180px; width:302px;" class="form-control col-4" type="text" id="searchInput" onkeyup="searchByFields()" placeholder="Rechercher par nom ou prénom...">
+                
+                </div>
                     <label style="margin-left:62px;" for="serieFilter">série:</label>
                         <select id="serieFilter" onchange="filterBySerie()" class="form-control col-2" >
                             <option value="">Toutes les séries</option>
@@ -25,14 +26,16 @@
                         </select>
                       
                 <input style="margin-left:25px;" class="form-control col-3" type="text" id="convocation" onkeyup="searchByConvocation()" placeholder="Entrez le numéro convocation">
-                      
+                  <div>
+             
+              </div> 
        <form action="{{ path('add_selected_to_pdf') }}" method="POST"> 
              <div class="col-md-2 d-flex align-items-center">  
             
-          <button type="submit" class="btn btn-primary" style="margin-left:50px;">Ajouter </button>
+          <button title="convocation"type="submit" class="btn btn-danger" style="margin-left:50px;"><i class="fa fa-file-pdf-o"></i> </button>
 
  
-            <button style="margin-left:55px;" type="button" class="btn btn-secondary" onclick="selectAllStudents()">Sélectionner</button>
+            <button style="margin-left:55px;" type="button" class="btn btn-secondary" onclick="selectAllStudents()"> <i class="fa fa-check-square-o"></i></button>
       
    </div>
     </div>
@@ -69,8 +72,11 @@
                             <td>{{ etudient.collective }}</td>
                             <td>{{ etudient.individuel }}</td>
                             <td>
-                                <a title="Détails" href=""><i class="fa fa-eye" style="padding: 5px;font-size:20px;"></i></a>
-                                <a title="Modifier" href=""><i class="fa fa-edit" style="padding: 5px;font-size:20px;color:green;"></i></a>
+                            <a title="Modifier" href="{{ path('edit_student', {'id': etudient.id}) }}"><i class="fa fa-edit" style="padding: 5px;font-size:20px;color:green;"></i></a>
+
+                 
+                            <a title="Supprimer" href="{{ path('delete_student', {'id': etudient.id}) }}" onclick="return confirm('Voulez-vous supprimer cet étudiant ?')" > <i class="fa fa-trash" style="padding:5px;font-size:20px;"></i></a>
+
                                 <input type="checkbox" name="selected_students[]" style="padding: 5px;font-size:20px;"value="{{ etudient.id }}">
                                 {# <a href="{{ path('app_etudient_edit', {'id': etudiant.id}) }}">edit</a>  #}
                             </td>

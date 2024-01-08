@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {{include('inc/dashboard.html.twig')}}
+      
+        {% block stylesheets %}
+    
+        {% endblock %}
+
+        {% block javascripts %}
+   
+        {% endblock %}
+    </head>
+    <body style="background-color:#DDD9DB; font-size:14px;">
+        <div class="container" style="width: 80%; position: relative; left:110px; top:-40px" >
+            {% block body %}{% endblock %}
+        </div>
+    </body>
+</html>

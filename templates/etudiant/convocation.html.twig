@@ -1,44 +1,45 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-    
-
-    <div class="card" style="width:400px;height:400px;margin-left:255px;">
-        <div class="card-body">
-            <div class="card" style="width:1200px;">
-                <div class="card-body bs-card-subtitle-color">
-                    <div id="alert-div"></div>
-                    <div class="row">
-          
-                        {% for etudient in etudients %}
-                        
-                            <div class="col-md-4">
-                                <div class="student-card">
-                                    <h4>Nom:{{ etudient.nom }}</h4>
-                                    <h4>Prénom:{{ etudient.prenom }}</h4>
-                                    <h4>Convocation: {{ etudient.convocation }}</h4>
-                                    <h4>Etablissement: {{ etudient.etablissement }}</h4>
-                                    <h4>Série: {{ etudient.serie }}</h4>
-                                    ----------------------------------------------------
-                                    
-                                    <p>convocation EPS</p>
-                                     <h4>Numéro: {{ etudient.convocation }}</h4>
-                                      <h4>{{ etudient.collective }}</h4>
-                                      <h4>{{ etudient.collective }}</h4>
-
-                                 
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="col-md-12">
-                                <p>Aucun enregistrement trouvé</p>
-                            </div>
-                        {% endfor %}
+    <div class="card" style="width: 1200px;">
+        <div class="card-body bs-card-subtitle-color">
+            <div id="alert-div"></div>
+            <div class="row">
+                {% for etudiant in etudients %}
+                    <div class="col-md-4">
+                        <div class="student-card">
+                            <h4>Convocation épreuve Ecrite</h4>
+                            <p>Nom: {{ etudiant.nom }}</p>
+                            <p>Prénom: {{ etudiant.prenom }}</p>
+                            <p>Etablissement: {{ etudiant.etablissement }}</p>
+                            <p>Numéro de convocation: {{ etudiant.convocation }}</p>
+                            <p>Série: {{ etudiant.serie }}</p>
+                           
+                            {% if etudiant.convocation is not null and (etudiant.collective is not null or etudiant.individuel is not null) %}
+                                <h4>Convocation épreuve EPS</h4>
+                                <p>Nom: {{ etudiant.nom }}</h4>
+                                <p>Prénom: {{ etudiant.prenom }}</p>
+                                <p>Etablissement: {{ etudiant.etablissement }}</p>
+                                <p>Numéro de convocation: {{ etudiant.convocation }}</p>
+                                {% if etudiant.convocation is not null %}
+                                    <p>Numéro: {{ etudiant.convocation }}</p>
+                                {% endif %}
+                                {% if etudiant.collective is not null %}
+                                    <p>Collective: {{ etudiant.collective }}</p>
+                                {% endif %}
+                                {% if etudiant.individuel is not null %}
+                                    <p>Individuel: {{ etudiant.individuel }}</p>
+                                {% endif %}
+                            {% endif %}
+                             <hr>
+                        </div>
                     </div>
-                </div>
+                {% else %}
+                    <div class="col-md-12">
+                        <p>Aucun enregistrement trouvé</p>
+                    </div>
+                {% endfor %}
             </div>
-
-   
-       
+        </div>
+    </div>
 {% endblock %}

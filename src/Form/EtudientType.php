@@ -22,7 +22,7 @@ class EtudientType extends AbstractType
     {
         $builder
         ->add('Image', FileType::class, [
-            'label' => 'Choisir une image',
+            'label' => 'Choisir votre photo',
             'required' => false,
             // Spécifiez ici l'ID pour le champ d'image
             'attr' => ['id' => 'imageInput'], // L'ID est ici défini comme 'etudiant_Image'
@@ -108,7 +108,8 @@ class EtudientType extends AbstractType
             ->add('Facultative', ChoiceType::class, [
                 'choices' => [
                     'Anglais' => 'Anglais',
-                    'Physique' => 'Physique'
+                    'Physique' => 'Physique',
+                    'Science'=>'Science'
                 ],
                 'attr' => [
                     'class' => 'form-control'
@@ -137,10 +138,15 @@ class EtudientType extends AbstractType
                 //'required' => false,
             ])
             ->add('Enregistrer', SubmitType::class, [
+                'label' => '<i class="fa fa-save">Enregistrer</i> ',
                 'attr' => [
-                    'class' => 'btn btn-primary mt-3 '
-                ]
+                    'class' => 'btn btn-success mt-3',
+                    'style' => 'margin-top: -40px;font-size:20px;width:125px;', // Si vous avez besoin de gérer le style ici
+                    'formnovalidate' => 'formnovalidate' // Pour empêcher la validation HTML5
+                ],
+                'label_html' => true // Pour indiquer que le label contient du HTML
             ])
+            
         ;
     }
 
