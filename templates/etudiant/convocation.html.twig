@@ -9,12 +9,12 @@
                     <div class="col-md-4">
                         <div class="student-card">
                             <h4>Convocation épreuve Ecrite</h4>
-                            <p>Nom: {{ etudiant.nom }}</p>
-                            <p>Prénom: {{ etudiant.prenom }}</p>
-                            <p>Etablissement: {{ etudiant.etablissement }}</p>
-                            <p>Numéro de convocation: {{ etudiant.convocation }}</p>
-                            <p>Série: {{ etudiant.serie }}</p>
-                           
+                                <p>Nom: {{ etudiant.nom }}</p>
+                                <p>Prénom: {{ etudiant.prenom }}</p>
+                                <p>Etablissement: {{ etudiant.etablissement }}</p>
+                                <p>Numéro de convocation: {{ etudiant.convocation }}</p>
+                                <p>Série: {{ etudiant.serie }}</p>
+                            
                             {% if etudiant.convocation is not null and (etudiant.collective is not null or etudiant.individuel is not null) %}
                                 <h4>Convocation épreuve EPS</h4>
                                 <p>Nom: {{ etudiant.nom }}</h4>
