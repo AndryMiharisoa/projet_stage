@@ -18,12 +18,14 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class EtudiantController extends AbstractController
 {
     
      private $etudients = [];
     #[Route('/etudiant', name: 'app_etudiant')]
+ 
     public function index(Request $request): Response
     {
         $etudients = $this->getDoctrine()->getRepository(Etudient::class)->findAll();
@@ -51,6 +53,7 @@ class EtudiantController extends AbstractController
 
 
     #[Route('/inscription', name: 'inscription', methods: ['POST', 'GET'])]
+  
     public function Inscription(Request $request, EntityManagerInterface $entityManager):  Response
     {
         $etudiant = new Etudient();
@@ -118,6 +121,7 @@ class EtudiantController extends AbstractController
         ]);
     }
     #[Route('/etudiant/edit/{id}', name: 'edit_student')]
+
 public function edite(int $id, Request $request, EntityManagerInterface $entityManager): Response
 {
     $etudiant = $this->getDoctrine()->getRepository(Etudient::class)->find($id);
@@ -129,6 +133,10 @@ public function edite(int $id, Request $request, EntityManagerInterface $entityM
         $form = $this->createFormBuilder($etudiant)
             ->add('nom') // Ajoutez tous les champs nécessaires ici
             ->add('prenom')
+            ->add('mere')
+            ->add('pere')
+            ->add('collective')
+            ->add('individuel')
             // Ajoutez d'autres champs requis pour l'édition
             ->getForm();
 
@@ -146,7 +154,7 @@ public function edite(int $id, Request $request, EntityManagerInterface $entityM
         ]);
     }
     #[Route('/etudiant/delete/{id}', name: 'delete_student')]
-
+  
 public function deleteStudent(int $id, EntityManagerInterface $entityManager): Response
 {
     $etudiant = $this->getDoctrine()->getRepository(Etudient::class)->find($id);
@@ -206,7 +214,7 @@ public function deleteStudent(int $id, EntityManagerInterface $entityManager): R
         $dompdf->render();
 
         // Enregistrer le fichier PDF dans le dossier spécifié sur le serveur
-        $destinationPath = 'E:/boky/'; // Remplacez par votre chemin absolu
+        $destinationPath = 'E:/boky'; // Remplacez par votre chemin absolu
         $pdfFileName = 'liste_etudiants.pdf';
         $pdfFilePath = $destinationPath . $pdfFileName;
 

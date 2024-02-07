@@ -16,6 +16,26 @@
                 {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
                 {# Appliquez les classes Bootstrap à votre champ Prénom #}
             </div>
+            <div class="form-group">
+                {{ form_label(form.pere, 'pere', {'label_attr': {'class': 'font-weight-bold'}}) }}
+                {{ form_widget(form.pere, {'attr': {'class': 'form-control'}}) }}
+                {# Appliquez les classes Bootstrap à votre champ Nom #}
+            </div>
+             <div class="form-group">
+                {{ form_label(form.mere, 'mere', {'label_attr': {'class': 'font-weight-bold'}}) }}
+                {{ form_widget(form.mere, {'attr': {'class': 'form-control'}}) }}
+                {# Appliquez les classes Bootstrap à votre champ Nom #}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.collective, 'collective', {'label_attr': {'class': 'font-weight-bold'}}) }}
+                {{ form_widget(form.collective, {'attr': {'class': 'form-control'}}) }}
+                {# Appliquez les classes Bootstrap à votre champ Nom #}
+            </div>
+             <div class="form-group">
+                {{ form_label(form.individuel, 'individuel', {'label_attr': {'class': 'font-weight-bold'}}) }}
+                {{ form_widget(form.individuel, {'attr': {'class': 'form-control'}}) }}
+                {# Appliquez les classes Bootstrap à votre champ Nom #}
+            </div>
             {# Ajoutez d'autres champs avec leurs classes Bootstrap #}
 
             <button type="submit" class="btn btn-primary">Enregistrer</button>

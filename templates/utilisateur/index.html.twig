@@ -1,1 +1,48 @@
  {% extends 'interface.html.twig' %}
+
+{% block body %}
+
+<table class="table table-bordered bs-table-border-color " style="margin-top:-533px;width:1000px;margin-left:auto;">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>E-mail</th>
+                            <th>Numero</th>
+                         
+                        
+                            <th width="100px">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projects-table-body">
+                           {% for utilisateur in utilisateurs %}
+                             <tr>
+                                 <td>{{ utilisateur.nom }}</td>
+                                 <td>{{ utilisateur.prenom }}</td>
+                                 <td>{{ utilisateur.mail}}</td>
+                                 <td>{{ utilisateur.type }}</td>
+                            <td>  
+
+                                 <a title="Modifier" href=""><i class="fa fa-edit" style="padding: 5px;font-size:20px;color:green;"></i></a>
+                                 <a title="Supprimer" href="" onclick="return confirm('Voulez-vous supprimer cet étudiant ?')" > <i class="fa fa-trash" style="padding:5px;font-size:20px;color:#d53f3f;"></i></a>
+
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7">Aucun enregistrement trouvé</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+
+
+</script>
+
+{% endblock %}

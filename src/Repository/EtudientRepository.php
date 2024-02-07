@@ -70,6 +70,13 @@ public function findByConvocation($convocation)
         ->getQuery()
         ->getResult();
 }
-
+public function findByRegion(string $Region): array
+{
+    return $this->createQueryBuilder('e')
+        ->andWhere('e.Region = :Region')
+        ->setParameter('Region', $Region)
+        ->getQuery()
+        ->getResult();
+}
 
 }

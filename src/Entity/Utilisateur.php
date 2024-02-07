@@ -28,6 +28,12 @@ class Utilisateur
     #[ORM\Column(length: 255)]
     private ?string $Phone = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Adress = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +96,29 @@ class Utilisateur
     {
         $this->Phone = $Phone;
 
+        return $this;
+    }
+
+    public function getAdress(): ?string
+    {
+        return $this->Adress;
+    }
+
+    public function setAdress(?string $Adress): static
+    {
+        $this->Adress = $Adress;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->Type;
+    }
+
+    public function setType(string $Type): static
+    {
+        $this->Type = $Type;
         return $this;
     }
 }

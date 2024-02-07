@@ -17,6 +17,8 @@ class UtilisateurType extends AbstractType
             ->add('Mail')
             ->add('MotDePass')
             ->add('Phone')
+            ->add('Adress')
+            ->add('Type')
         ;
     }
 

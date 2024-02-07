@@ -1,0 +1,78 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+  
+{% block body %}
+    <body>
+     <div class="container mt-4">
+        <div class="row justify-content-center col-10 lg-6 m-auto">
+            <div class="col-md-8" style="margin-top:-20px;">
+                <div class="card">
+                    <div class="card-header ">
+                        <h5 class="text-center"><i class="fas fa-user-plus"></i> inscription</h5>
+                    </div>
+                   
+                    <div class="card-body">
+                      <div class="col-8 lg-4 sm-4 m-auto">
+                            <form method="post" action="{{ path('admin_registre') }}" class="needs-validation" novalidate>
+                                    <div class="form-group mt-2">
+                                        <label for="nom" ><i class="fas fa-user" style="color:green"></i> Nom :</label>
+                                        <input type="text" id="nom" name="nom" class="form-control mt-2" required>
+                                        <div class="invalid-feedback">Veuillez entrer votre nom.</div>
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label for="prenom"><i class="fas fa-user"  style="color:green"></i> Prénom :</label>
+                                        <input type="text" id="prenom" name="prenom" class="form-control mt-2" required>
+                                        <div class="invalid-feedback">Veuillez entrer votre prénom.</div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="adresse"><i class="fas fa-map-marker-alt" style="color:green"></i> Adresse :</label>
+                                        <input type="text" id="adresse" name="adresse" class="form-control mt-2" required>
+                                        <div class="invalid-feedback">Veuillez entrer votre adresse.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email"><i class="fas fa-envelope " style="color:green"></i> Email :</label>
+                                        <input type="email" id="email" name="email" class="form-control mt-2" required>
+                                        <div class="invalid-feedback">Veuillez entrer une adresse email valide.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telephone"><i class="fas fa-phone fa-rotate-90"  style="color:green"></i> Numéro de téléphone :</label>
+                                        <input type="text" id="telephone" name="telephone" class="form-control mt-2" required>
+                                        <div class="invalid-feedback">Veuillez entrer votre numéro de téléphone.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password"><i class="fas fa-lock"  style="color:green"></i> Mot de passe :</label>
+                                        <input type="password" id="password" name="password" class="form-control mt-2" required>
+                                        <div class="invalid-feedback">Veuillez entrer un mot de passe.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="type"><i class="fas fa-user-cog" style="color:green"></i> Type :</label>
+                                        <select id="type" name="type" class="form-control mt-2">
+                                            <option value="admin">Admin</option>
+                                            <option value="operateur">Opérateur</option>
+                                            <option value="directeur_ecole">Directeur d'école</option>
+                                            <option value="super_admin">Super Admin</option>
+                                        </select>
+                                        
+                                    </div> 
+                                <button type="submit" class="btn btn-primary mt-3 " style="width:300px; margin-left:30px;"><i class="fas fa-user-plus"></i> S'inscrire</button>
+                            </form>
+                                     <a href="{{path('app_login')}}">Se connecté</a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <title>Inscription</title>
+    <!-- Lien vers votre fichier CSS -->
+   
+    <!-- Inclure Font Awesome via un lien CDN -->
+   
+    <!-- Lien vers Bootstrap CSS -->
+
+</body>
+{% endblock %}

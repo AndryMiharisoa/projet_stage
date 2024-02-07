@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-4">
+        <div class="row justify-content-center col-12 lg-6 m-auto">
+            <div class="col-md-8" style="margin-top:-20px;">
+                <div class="card">
+                    <div class="card-header ">
+                        <h5 class="text-center"><i class="fas fa-user-plus"></i> inscription</h5>
+                    </div>
+                   
+                    <div class="card-body">
+                      <div class="col-8 lg-4 sm-4 m-auto">
+                        <form method="post" action="{{ path('direction') }}">
+                           <div class="form-group mt-2">
+                               <label for="nom" ><i class="fas fa-user" style="color:green"></i> Nom :</label>
+                                  <input type="text" id="nom" name="nom" class="form-control mt-2" required>
+                                 <div class="invalid-feedback">Veuillez entrer votre nom.</div>
+                            </div>
+                            
+                            <div class="form-group mt-2">
+                                <label for="nom" ><i class="fas fa-user" style="color:green"></i> Prénom :</label>
+                                    <input type="text" id="prenom" name="prénom" class="form-control mt-2" required>
+                                      <div class="invalid-feedback">Veuillez entrer votre prénom.</div>
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="date_naissance">Date de naissance :</label>
+                                    <input type="date" id="date_naissance" name="date_naissance" required>
+                                   <div class="invalid-feedback">Veuillez entrer votre prénom.</div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="adresse"><i class="fas fa-map-marker-alt" style="color:green"></i> Adresse :</label>
+                                    <input type="text" id="adresse" name="adresse" class="form-control mt-2" required>
+                                    <div class="invalid-feedback">Veuillez entrer votre adresse.</div>
+                            </div>
+
+                            <div class="form-group mt-2">
+                                 <label for="mail"><i class="fas fa-envelope " style="color:green"></i>Mail :</label>
+                                    <input type="text" id="mail" name="mail"class="form-control mt-2" required>
+                                 <div class="invalid-feedback">Veuillez entrer votre mail.</div>
+                            </div>
+                            
+                            <div class="form-group mt-2">
+                               <label for="etablissement">Établissement :</label>
+                                <input type="text" id="etablissement" name="etablissement" class="form-control mt-2" required>
+                                  <div class="invalid-feedback">Veuillez entrer votre mail.</div>
+                            </div>
+                              <div class="form-group mt-2">
+                              <label for="mot_pass"><i class="fas fa-lock"  style="color:green"></i>Mot de passe :</label>
+                                <input type="password" id="mot_pass" name="mot_pass" class="form-control mt-2" required>
+                                <div class="invalid-feedback">Veuillez entrer votre mots depass.</div>
+                            </div>
+                            <div class="form-group mt-2"> 
+                                <label for="lieu">Lieu :</label>
+                                 <input type="text" id="lieu" name="lieu" class="form-control mt-2" required>
+                               <div class="invalid-feedback">Veuillez entrer votre mots depass.</div>
+                            </div>
+                            <label for="region">Région :</label>
+                            <input type="text" id="region" name="region"  class="form-control mt-2" required>
+                         <button type="submit" class="btn btn-primary mt-3 " style="width:300px; margin-left:30px;"><i class="fas fa-user-plus"></i> S'inscrire</button>
+                            </form>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                        
+{% endblock %}
